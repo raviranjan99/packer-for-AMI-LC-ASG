@@ -1,0 +1,37 @@
+{
+    "variables": {
+        "aws_access_key": " ",
+        "aws_secret_key": " "
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "access_key": "{{user `aws_access_key`}}",
+        "secret_key": "{{user `aws_secret_key`}}",
+        "region": "us-weast-1",
+        "source_ami": " ",
+        "instance_type": "c4.xlarge ",
+        "ssh_username": "ubuntu",
+        "associate_public_ip_address": true,
+        "ami_name": "packer.example.{{timestamp}}",
+        "vpc_id": "vpc-xyz",
+        "subnet_id": "subnet-xcvf",
+        "tags": {
+            "Name": "packer.example.{{timestamp}}",
+            "source": "packer"
+        }
+    }],
+
+ "provisioners": [
+        {
+            "type": "file",
+            "source": "files/nginx.conf",
+            "destination": "/nginx.conf"
+        },
+        {
+          "type": "shell",
+           "scripts": [
+          "scripts/packer-provision.sh"
+           ]
+        },
+]
+}
